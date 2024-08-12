@@ -3,3 +3,9 @@
 *__pycache__/
 
 /public/uploads/*
+
+/build
+
+*.zip
+
+*.pem

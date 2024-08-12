@@ -28,6 +28,9 @@ def fetch_plot_data(request: Request):
             na_values=na_values,
         )
 
+        df.replace([np.inf, -np.inf], np.nan, inplace=True)
+        df.fillna(0, inplace=True)
+
         if chart_type == "Scatter":
             df_avg = pd.concat([df[[x]], df[[y]]], axis=1)
         else:
