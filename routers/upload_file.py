@@ -1,7 +1,6 @@
 from fastapi import APIRouter, UploadFile, File
 from fastapi.responses import JSONResponse
 import os
-import asyncio
 
 router = APIRouter()
 

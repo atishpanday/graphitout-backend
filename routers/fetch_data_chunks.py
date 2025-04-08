@@ -4,7 +4,6 @@ from fastapi.requests import Request
 import pandas as pd
 import numpy as np
 import os
-import asyncio
 
 from utils.na_values import na_values
 
@@ -32,13 +31,22 @@ async def fetch_data_chunks(request: Request):
         chunk_size = 100
         start_line = index * chunk_size + 1
 
-        df = pd.read_csv(
-            file_path,
-            skiprows=range(1, start_line),
-            nrows=chunk_size,
-            parse_dates=True,
-            na_values=na_values,
-        )
+        if file_name.endswith(".csv") or file_name.endswith(".txt"):
+            df = pd.read_csv(
+                file_path,
+                skiprows=range(1, start_line),
+                nrows=chunk_size,
+                parse_dates=True,
+                na_values=na_values,
+            )
+        elif file_name.endswith(".xlsx"):
+            df = pd.read_excel(
+                file_path,
+                skiprows=range(1, start_line),
+                nrows=chunk_size,
+                parse_dates=True,
+                na_values=na_values,
+            )
 
         df.replace([np.inf, -np.inf], np.nan, inplace=True)
         df.fillna(0, inplace=True)
